@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Others
+*.aux
+*.toc
+*.snm
+*.log

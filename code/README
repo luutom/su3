@@ -1,0 +1,3 @@
+# To test the code in a login node, run
+
+./myChroma -i test.ini.xml -by 4 -bz 4 -c 48 -sy 1 -sz 1 -pxy 1 -pxyz 0 -minct 1 -geom 1 1 1 1
