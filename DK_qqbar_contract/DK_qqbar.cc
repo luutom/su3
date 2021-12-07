@@ -201,29 +201,31 @@ int main(int argc, char **argv)
 	cout << "   p:"<< p[0]<<" "<< p[1] <<" "<< p[2]<<": ";
 	cout << "   q:"<< q[0]<<" "<< q[1] <<" "<< q[2]<<": " << endl;
       }
-      // DK_15
-      multi1d<DComplex> C15(Nt) ;
-      DoDK_15(QQbarK, QQbarD, p, q, Nx, C15) ; // pi(p) k(q)
-      {
-	ofstream jlist(DK_15.c_str());
-	jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
-	for(int t(0); t<Nt;t++)
+      if( PtotSq < 5){// Ptot cut
+	  // DK_15
+	  multi1d<DComplex> C15(Nt) ;
+	  DoDK_15(QQbarK, QQbarD, p, q, Nx, C15) ; // pi(p) k(q)
 	  {
-	    jlist <<t<<" "<< std::setprecision(16) <<real(C15[t])<<" "<<imag(C15[t])<<endl;
+	    ofstream jlist(DK_15.c_str());
+	    jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
+	    for(int t(0); t<Nt;t++)
+	      {
+		jlist <<t<<" "<< std::setprecision(16) <<real(C15[t])<<" "<<imag(C15[t])<<endl;
+	      }
+	    jlist.close();
 	  }
-	jlist.close();
-      }
-      // DK_6
-      multi1d<DComplex> C6(Nt) ;
-      DoDK_6(QQbarK, QQbarD, p, q, Nx, C6) ; // pi(p) k(q)
-      {
-	ofstream jlist(DK_6.c_str());
-	jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
-	for(int t(0); t<Nt;t++)
+	  // DK_6
+	  multi1d<DComplex> C6(Nt) ;
+	  DoDK_6(QQbarK, QQbarD, p, q, Nx, C6) ; // pi(p) k(q)
 	  {
-	    jlist <<t<<" "<< std::setprecision(16) <<real(C6[t])<<" "<<imag(C6[t])<<endl;
+	    ofstream jlist(DK_6.c_str());
+	    jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
+	    for(int t(0); t<Nt;t++)
+	      {
+		jlist <<t<<" "<< std::setprecision(16) <<real(C6[t])<<" "<<imag(C6[t])<<endl;
+	      }
+	    jlist.close();
 	  }
-	jlist.close();
       }
     }// q-mom loop
   }// p-mom loop
