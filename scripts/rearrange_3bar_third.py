@@ -31,11 +31,13 @@ with open('conf.list','r') as c:
         confs.append(line.strip())
 
 for y in range(NT): #loop for y
+    print('y: ',y)
     DATA3=[]
     for iconf, conf in enumerate(confs):
         print(iconf+1, conf)
         #Third Term
-        filelist_third=sorted(glob.glob(input_dir+'/THIRD/{}/{}_y{}_X*.xml'.format(conf,conf,y)))
+        filelist_third=sorted(glob.glob(input_dir+'/THIRD/{}/{}_y{}_*.xml'.format(conf,conf,y)))
+        print(len(filelist_third))
         Data3=[]
         for f3 in filelist_third:
             data3=[]
@@ -43,10 +45,10 @@ for y in range(NT): #loop for y
                 tree=ET.parse(f3)
                 root=tree.getroot()
                 for meson in root.findall("./Wilson_hadron_measurements/elem/Shell_Shell_Wilson_Mesons/elem/[gamma_value='15']/momenta/elem/[sink_mom='{}']/mesprop/elem/re".format(mom2)):
-                    data3.append(float(meson.text)) #data_TrSC[y']
-                    Data3.append(data3[y]) #pick y=y' Data3[Nsrc]
+                    data3.append(float(meson.text)) #data3[y']
             except:
                 print(f3)
+            Data3.append(data3[y]) #pick y=y' Data3[Nsrc]
         DATA3.append(np.mean(Data3)) #DATA3[nconf]
     hf=h5py.File(output+'.h5','a')
     group='THIRD/MOM_{}'.format('_'.join(mom.split(' ')))
