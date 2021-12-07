@@ -23,7 +23,7 @@ DK_qqbar.x::  $(OBJ) $(INC)
 
 
 .o.x:
-    ${CPP}  ${LD_FLAGS} $*.o  $(OBJ)  ${LIBS} -o $*
+	${CPP}  ${LD_FLAGS} $*.o  $(OBJ)  ${LIBS} -o $*
 
 
 # this includes the dependecy files
@@ -31,14 +31,14 @@ DK_qqbar.x::  $(OBJ) $(INC)
 
 # The next line gets the dependences
 .cc.d:
-    set -e; $(CPP) -MM $(CPP_FLAGS) $< \
-    | sed 's/\($*\)\.o[ :]*/\1.o $@ : /g' > $@; \
-    [ -s $@ ] || rm -f $@
+	set -e; $(CPP) -MM $(CPP_FLAGS) $< \
+	| sed 's/\($*\)\.o[ :]*/\1.o $@ : /g' > $@; \
+	[ -s $@ ] || rm -f $@
 
 .cc.o:
-    ${CPP} ${CPP_FLAGS}  -c $(CPP_FLAGS)  $*.cc
+	${CPP} ${CPP_FLAGS}  -c $(CPP_FLAGS)  $*.cc
 
 SOURCE = $(CSRC) $(INC) Makefile DK_qqbar.cc
 
 clean:
-    rm *.o *.d DK_qqbar
+	rm *.o *.d DK_qqbar
