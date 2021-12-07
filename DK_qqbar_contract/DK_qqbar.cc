@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <libgen.h>
 #include <math.h>
+#include <iomanip>
 
 #include "chroma.h"
 #include "meas/hadron/qqbar_w.h"
@@ -208,7 +209,7 @@ int main(int argc, char **argv)
     jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
     for(int t(0); t<Nt;t++)
       {
-        jlist <<t<<" "<<real(C15[t])<<" "<<imag(C15[t])<<endl;
+        jlist <<t<<" "<< std::setprecision(16) <<real(C15[t])<<" "<<imag(C15[t])<<endl;
       }
     jlist.close();
       }
@@ -220,7 +221,7 @@ int main(int argc, char **argv)
     jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
     for(int t(0); t<Nt;t++)
       {
-        jlist <<t<<" "<<real(C6[t])<<" "<<imag(C6[t])<<endl;
+        jlist <<t<<" "<< std::setprecision(16) <<real(C6[t])<<" "<<imag(C6[t])<<endl;
       }
     jlist.close();
       }
