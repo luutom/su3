@@ -26,32 +26,32 @@ const double PI = 2*acos(0.0);
 //   6: Tr[A]Tr[B] + Tr[A.B]
 //
 void DK_15(multi1d<DComplex>& corr,
-    multi1d<DPropagator>& meson_block_p1,
-    multi1d<DPropagator>& meson_block_p2)
-    {
-    int Nt = meson_block_p1.size() ;
-    corr.resize(Nt) ;
+	   multi1d<DPropagator>& meson_block_p1,
+	   multi1d<DPropagator>& meson_block_p2)
+{
+  int Nt = meson_block_p1.size() ;
+  corr.resize(Nt) ;
 
-    for(int t(0);t<Nt;t++){
-        DPropagator Phi1 = meson_block_p1[t]*Gamma(Ns*Ns - 1) ; // Gamma15 = gamma_5
-        DPropagator Phi2 = meson_block_p2[t]*Gamma(Ns*Ns - 1) ;
-        corr[t] = trace(Phi1)*trace(Phi2) - trace(Phi1*Phi2) ;
-        }
-    }
+  for(int t(0);t<Nt;t++){
+    DPropagator Phi1 = meson_block_p1[t]*Gamma(Ns*Ns - 1) ; // Gamma15 = gamma_5
+    DPropagator Phi2 = meson_block_p2[t]*Gamma(Ns*Ns - 1) ;
+    corr[t] = trace(Phi1)*trace(Phi2) - trace(Phi1*Phi2) ;
+  }
+}
 
 void DK_6(multi1d<DComplex>& corr,
-    multi1d<DPropagator>& meson_block_p1,
-    multi1d<DPropagator>& meson_block_p2)
-    {
-    int Nt = meson_block_p1.size() ;
-    corr.resize(Nt) ;
+	  multi1d<DPropagator>& meson_block_p1,
+	  multi1d<DPropagator>& meson_block_p2)
+{
+  int Nt = meson_block_p1.size() ;
+  corr.resize(Nt) ;
 
-    for(int t(0);t<Nt;t++){
-        DPropagator Phi1 = meson_block_p1[t]*Gamma(Ns*Ns - 1) ; // Gamma15 = gamma_5
-        DPropagator Phi2 = meson_block_p2[t]*Gamma(Ns*Ns - 1) ;
-        corr[t] = trace(Phi1)*trace(Phi2) + trace(Phi1*Phi2) ;
-        }
-    }
+  for(int t(0);t<Nt;t++){
+    DPropagator Phi1 = meson_block_p1[t]*Gamma(Ns*Ns - 1) ; // Gamma15 = gamma_5
+    DPropagator Phi2 = meson_block_p2[t]*Gamma(Ns*Ns - 1) ;
+    corr[t] = trace(Phi1)*trace(Phi2) + trace(Phi1*Phi2) ;
+  }
+}
 
 //
 //  Main to do the DK in the 15 and 6 SU(3) flavor representations
@@ -105,15 +105,15 @@ int main(int argc, char **argv)
     read(file_xml,"/qqqNucNuc_w/Propagator_info/Propagator[1]/PropSink",snk_head);
   }
   else if(
-      file_xml.count(
-     "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSource"
-     )!=0){
+	  file_xml.count(
+			 "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSource"
+			 )!=0){
     read(file_xml,
-     "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSource",
-     src_head);
+	 "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSource",
+	 src_head);
     read(file_xml,
-     "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSink",
-     snk_head);
+	 "/qqqNucNuc_w/Propagator_info/Propagator/elem[1]/ForwardProp/PropSink",
+	 snk_head);
   }
   else{
     QDPIO::cerr<<"OOPS! can't get the propagator source!\n";
@@ -182,8 +182,8 @@ int main(int argc, char **argv)
 
       PtotSq = 0;
       for( int i(0); i < 3; i++){
-    Ptot[i] = p[i] + q[i];
-    PtotSq += Ptot[i] * Ptot[i];
+	Ptot[i] = p[i] + q[i];
+	PtotSq += Ptot[i] * Ptot[i];
       }
       stringstream pTs;
       pTs <<"Px"<<Ptot[0]<<"Py"<<Ptot[1]<<"Pz"<<Ptot[2];
@@ -197,33 +197,33 @@ int main(int argc, char **argv)
       string DK_6R  = ms  + DK_6_file ;
 
       if(Ptot[0] == 0 && Ptot[1] == 0 && Ptot[2] == 0){
-    cout << "Ptot: "<< Ptot[0] <<" "<< Ptot[1] <<" "<< Ptot[2]<<": ";
-    cout << "   p:"<< p[0]<<" "<< p[1] <<" "<< p[2]<<": ";
-    cout << "   q:"<< q[0]<<" "<< q[1] <<" "<< q[2]<<": " << endl;
+	cout << "Ptot: "<< Ptot[0] <<" "<< Ptot[1] <<" "<< Ptot[2]<<": ";
+	cout << "   p:"<< p[0]<<" "<< p[1] <<" "<< p[2]<<": ";
+	cout << "   q:"<< q[0]<<" "<< q[1] <<" "<< q[2]<<": " << endl;
       }
       // DK_15
       multi1d<DComplex> C15(Nt) ;
       DoDK_15(QQbarK, QQbarD, p, q, Nx, C15) ; // pi(p) k(q)
       {
-    ofstream jlist(DK_15.c_str());
-    jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
-    for(int t(0); t<Nt;t++)
-      {
-        jlist <<t<<" "<< std::setprecision(16) <<real(C15[t])<<" "<<imag(C15[t])<<endl;
-      }
-    jlist.close();
+	ofstream jlist(DK_15.c_str());
+	jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
+	for(int t(0); t<Nt;t++)
+	  {
+	    jlist <<t<<" "<< std::setprecision(16) <<real(C15[t])<<" "<<imag(C15[t])<<endl;
+	  }
+	jlist.close();
       }
       // DK_6
       multi1d<DComplex> C6(Nt) ;
       DoDK_6(QQbarK, QQbarD, p, q, Nx, C6) ; // pi(p) k(q)
       {
-    ofstream jlist(DK_6.c_str());
-    jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
-    for(int t(0); t<Nt;t++)
-      {
-        jlist <<t<<" "<< std::setprecision(16) <<real(C6[t])<<" "<<imag(C6[t])<<endl;
-      }
-    jlist.close();
+	ofstream jlist(DK_6.c_str());
+	jlist <<"1 "<<Nt<<" 1 "<<Nx<<" 1 "<<endl ;
+	for(int t(0); t<Nt;t++)
+	  {
+	    jlist <<t<<" "<< std::setprecision(16) <<real(C6[t])<<" "<<imag(C6[t])<<endl;
+	  }
+	jlist.close();
       }
     }// q-mom loop
   }// p-mom loop
